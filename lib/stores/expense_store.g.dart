@@ -43,6 +43,17 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
       ActionController(name: '_ExpenseStoreBase');
 
   @override
+  void addExpense() {
+    final _$actionInfo = _$_ExpenseStoreBaseActionController.startAction(
+        name: '_ExpenseStoreBase.addExpense');
+    try {
+      return super.addExpense();
+    } finally {
+      _$_ExpenseStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void fetchExpenses() {
     final _$actionInfo = _$_ExpenseStoreBaseActionController.startAction(
         name: '_ExpenseStoreBase.fetchExpenses');
