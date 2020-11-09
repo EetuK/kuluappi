@@ -9,11 +9,25 @@ abstract class _ExpenseStoreBase with Store {
   Expense expense;
 
   @observable
-  List<Expense> expenses;
+  List<Expense> expenses = [
+    Expense(1, 15, "Beer", "timestamp", 1),
+    Expense(2, 40, "Food", "timestamp", 1),
+    Expense(3, 23, "Gas", "timestamp", 2)
+  ];
+
+  @action
+  void addExpense() {
+    this.expenses = [
+      ...this.expenses,
+      Expense(this.expenses[this.expenses.length - 1].id + 1, 23, "Gas",
+          "timestamp", 2)
+    ];
+  }
 
   @action
   void fetchExpenses() {
     // Fetch list of expenses
+    //fetchExpensesByMonth(month)
   }
 
   @action

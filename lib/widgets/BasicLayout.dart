@@ -27,7 +27,7 @@ class BasicLayout extends StatelessWidget {
         ),
       ),
       body: this.body,
-      backgroundColor: Colors.orange[50],
+      backgroundColor: Colors.orange[100],
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(

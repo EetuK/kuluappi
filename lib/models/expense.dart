@@ -32,9 +32,7 @@ enum Month {
 
 // Here all the functions for Expense db operations e.g.
 
-Future<Expense> getExpenseById(num id) {
-  // ...
-}
+Future<Expense> getExpenseById(num id) {}
 
 Future<List<Expense>> getExpensesByMonth(Month month) {
   // ...
