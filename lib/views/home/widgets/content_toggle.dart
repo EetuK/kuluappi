@@ -22,38 +22,36 @@ class _ContentToggleState extends State<ContentToggle> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        flex: 15,
-        child: Container(
-          color: Colors.orange[50],
-          child: Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Month",
-                        textScaleFactor: 2,
-                      ),
-                      IconButton(
-                        icon: Icon(_isListView ? Icons.bar_chart : Icons.list),
-                        tooltip: 'List view',
-                        onPressed: () => {_toggleListView()},
-                      ),
-                    ],
-                  )),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  child: _isListView ? widget.listWidget : widget.chartWidget,
-                ),
-              )
-            ],
-          ),
-        ));
+    return Container(
+      color: Colors.orange[50],
+      child: Column(
+        children: [
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Month",
+                    textScaleFactor: 2,
+                  ),
+                  IconButton(
+                    icon: Icon(_isListView ? Icons.bar_chart : Icons.list),
+                    tooltip: 'List view',
+                    onPressed: () => {_toggleListView()},
+                  ),
+                ],
+              )),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 400),
+              child: _isListView ? widget.listWidget : widget.chartWidget,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

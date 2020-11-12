@@ -1,6 +1,9 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/stores/expense_store.dart';
+import 'package:kuluappi/views/home/widgets/charts/line_chart.dart';
+import 'package:kuluappi/views/home/widgets/charts/pie_chart.dart';
 import 'package:provider/provider.dart';
 
 class Charts extends StatelessWidget {
@@ -66,7 +69,9 @@ class Charts extends StatelessWidget {
                               onPressed: () => expenseStore.addExpense(),
                             ),
                           ])),
-                    )
+                    ),
+                    LineChartSample1(),
+                    PieChartSample2()
                   ],
                 ))));
   }

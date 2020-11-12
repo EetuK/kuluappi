@@ -12,24 +12,24 @@ class TopBar extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
-
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween, // mainAxisAlignment
         children: <Widget>[
           SvgPicture.asset("images/logo.svg"),
           if (isMenuButtonShown == true)
-            IconButton(
-              icon: Icon(Icons.menu),
-              tooltip: 'Open menu',
-              onPressed: () => onMenuPress(),
-            ),
+            Container(
+                margin: EdgeInsets.only(top: 15),
+                child: IconButton(
+                  icon: Icon(Icons.menu),
+                  tooltip: 'Open menu',
+                  onPressed: () => onMenuPress(),
+                ))
         ],
       ),
-      color: Color(0xf6ddb8),
+      color: Colors.orange[100],
       alignment: Alignment(-1.0, -1.0),
-      margin: EdgeInsets.only(top: statusBarHeight),
+      //margin: EdgeInsets.only(top: statusBarHeight),
     );
   }
 }
