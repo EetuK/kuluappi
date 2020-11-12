@@ -17,8 +17,9 @@ class BasicLayout extends StatelessWidget {
     double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(60),
         child: Builder(
           builder: (context) => TopBar(
             onMenuPress: () => Scaffold.of(context).openEndDrawer(),

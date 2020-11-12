@@ -14,21 +14,24 @@ class HomeView extends StatelessWidget {
 
     if (hasExpenses) {
       return BasicLayout(
-        body: Column(
+          body: SingleChildScrollView(
+              child: Container(
+        margin: EdgeInsets.only(top: 110),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TimeFilter(),
-            Spacer(
-              flex: 1,
+            Container(
+              margin: EdgeInsets.only(top: 20),
             ),
             ContentToggle(
               listWidget: Text("list widget"),
               chartWidget: Charts(),
-            )
+            ),
           ],
         ),
-      );
+      )));
     }
     return StartView();
   }
