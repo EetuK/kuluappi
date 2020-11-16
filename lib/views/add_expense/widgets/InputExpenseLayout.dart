@@ -127,7 +127,7 @@ class InputExpenseLayout extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => InputExpenseLayout()),
+                            MaterialPageRoute(builder: (context) => HomeView()),
                           );}
                     ),
 
