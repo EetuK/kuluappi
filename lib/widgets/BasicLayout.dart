@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kuluappi/views/add_expense/add_expense_view.dart';
+import 'package:kuluappi/views/settings/settings_view.dart';
 import 'TopBar.dart';
 
 class BasicLayout extends StatelessWidget {
@@ -56,17 +57,12 @@ class BasicLayout extends StatelessWidget {
               padding: EdgeInsets.all(15),
             ),
             ListTile(
-              title: Text('Item 1'),
+              title: Text('Settings'),
               onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsView()),
+                );
               },
             ),
           ],

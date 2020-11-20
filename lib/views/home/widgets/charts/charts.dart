@@ -1,6 +1,6 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:kuluappi/models/expense.dart';
 import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/views/home/widgets/charts/line_chart.dart';
 import 'package:kuluappi/views/home/widgets/charts/pie_chart.dart';
@@ -47,28 +47,6 @@ class Charts extends StatelessWidget {
                           border: Border(
                               bottom:
                                   BorderSide(color: Colors.black12, width: 1))),
-                    ),
-                    Observer(
-                      builder: (_) => Container(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                            ...expenseStore.expenses
-                                .map((e) => Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(e.id.toString()),
-                                          Text(e.description),
-                                          Text(e.amount.toString()),
-                                        ]))
-                                .toList(),
-                            MaterialButton(
-                              child: Text("Lisää kulu"),
-                              onPressed: () => expenseStore.addExpense(),
-                            ),
-                          ])),
                     ),
                     LineChartSample1(),
                     PieChartSample2()
