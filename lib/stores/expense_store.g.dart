@@ -39,8 +39,84 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
     });
   }
 
+  final _$isLoadingAtom = Atom(name: '_ExpenseStoreBase.isLoading');
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  final _$monthAtom = Atom(name: '_ExpenseStoreBase.month');
+
+  @override
+  Month get month {
+    _$monthAtom.reportRead();
+    return super.month;
+  }
+
+  @override
+  set month(Month value) {
+    _$monthAtom.reportWrite(value, super.month, () {
+      super.month = value;
+    });
+  }
+
+  final _$yearAtom = Atom(name: '_ExpenseStoreBase.year');
+
+  @override
+  int get year {
+    _$yearAtom.reportRead();
+    return super.year;
+  }
+
+  @override
+  set year(int value) {
+    _$yearAtom.reportWrite(value, super.year, () {
+      super.year = value;
+    });
+  }
+
+  final _$fetchExpensesAsyncAction =
+      AsyncAction('_ExpenseStoreBase.fetchExpenses');
+
+  @override
+  Future<void> fetchExpenses(Month month, int year) {
+    return _$fetchExpensesAsyncAction
+        .run(() => super.fetchExpenses(month, year));
+  }
+
   final _$_ExpenseStoreBaseActionController =
       ActionController(name: '_ExpenseStoreBase');
+
+  @override
+  void setMonth(Month month) {
+    final _$actionInfo = _$_ExpenseStoreBaseActionController.startAction(
+        name: '_ExpenseStoreBase.setMonth');
+    try {
+      return super.setMonth(month);
+    } finally {
+      _$_ExpenseStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setYear(int year) {
+    final _$actionInfo = _$_ExpenseStoreBaseActionController.startAction(
+        name: '_ExpenseStoreBase.setYear');
+    try {
+      return super.setYear(year);
+    } finally {
+      _$_ExpenseStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void addExpense() {
@@ -48,17 +124,6 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
         name: '_ExpenseStoreBase.addExpense');
     try {
       return super.addExpense();
-    } finally {
-      _$_ExpenseStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void fetchExpenses() {
-    final _$actionInfo = _$_ExpenseStoreBaseActionController.startAction(
-        name: '_ExpenseStoreBase.fetchExpenses');
-    try {
-      return super.fetchExpenses();
     } finally {
       _$_ExpenseStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -79,7 +144,10 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
   String toString() {
     return '''
 expense: ${expense},
-expenses: ${expenses}
+expenses: ${expenses},
+isLoading: ${isLoading},
+month: ${month},
+year: ${year}
     ''';
   }
 }
