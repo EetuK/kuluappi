@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:kuluappi/models/month.dart';
+import 'package:kuluappi/stores/expense_store.dart';
+import 'package:provider/provider.dart';
 
 class ContentToggle extends StatefulWidget {
   final Widget listWidget;
@@ -22,6 +26,7 @@ class _ContentToggleState extends State<ContentToggle> {
 
   @override
   Widget build(BuildContext context) {
+    final expenseStore = Provider.of<ExpenseStore>(context);
     return Container(
       color: Colors.orange[50],
       child: Column(
@@ -32,10 +37,11 @@ class _ContentToggleState extends State<ContentToggle> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "Month",
-                    textScaleFactor: 2,
-                  ),
+                  Observer(
+                      builder: (_) => Text(
+                            getMonthName(expenseStore.month),
+                            textScaleFactor: 2,
+                          )),
                   IconButton(
                     icon: Icon(_isListView ? Icons.bar_chart : Icons.list),
                     tooltip: 'List view',

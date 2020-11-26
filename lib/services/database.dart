@@ -46,7 +46,7 @@ class ExpenseDatabase {
       ''');
     await db.execute('''
       CREATE TABLE expenses (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         sum float NOT NULL,
         description TEXT NOT NULL,	
         date_created datetime NOT NULL,
@@ -80,8 +80,8 @@ class ExpenseDatabase {
         '''INSERT INTO expenses (sum, description, date_created, category_id) VALUES 
         (10, "Kaljaa", datetime("now"), 1), 
         (4.60, "Makkaraa", datetime("now"), 2),
-        (5, "Bensaa", datetime("now"), 3),
-        (60, "Lisää bensaa", datetime("now"), 3)
+        (5, "Bensaa", datetime('now','+40 day','localtime'), 3),
+        (60, "Lisää bensaa", datetime('now','+40 day','localtime'), 3)
       ''');
 
     print("Added dummy data to database");
