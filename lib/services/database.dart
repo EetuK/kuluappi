@@ -80,8 +80,24 @@ class ExpenseDatabase {
         '''INSERT INTO expenses (sum, description, date_created, category_id) VALUES 
         (10, "Kaljaa", datetime("now"), 1), 
         (4.60, "Makkaraa", datetime("now"), 2),
-        (5, "Bensaa", datetime('now','+40 day','localtime'), 3),
-        (60, "Lisää bensaa", datetime('now','+40 day','localtime'), 3)
+        (4.60, "Raakamakkaraa", datetime("now"), 2),
+        (4.60, "Mustaa makkaraa", datetime("now"), 2),
+        (5, "Bensaa nesteeltä", datetime('now','localtime'), 3),
+        (10, "Bensaa abclta", datetime('now','localtime'), 3),
+        (44, "Bensaa", datetime('now','localtime'), 3),
+        (71, "Bensaa venäjältä", datetime('now','localtime'), 3),
+        (8, "Bensaa", datetime('now','+40 day','localtime'), 3),
+        (60, "Lisää bensaa", datetime('now','+40 day','localtime'), 3),
+        (32, "Kaljaa", datetime('now','-40 day'), 1), 
+        (14.60, "Makkaraa", datetime('now','-40 day'), 2),
+        (46.60, "Raakamakkaraa", datetime('now','-40 day'), 2),
+        (1.60, "Mustaa makkaraa", datetime('now','-40 day'), 2),
+        (55, "Muusia", datetime('now','-40 day','localtime'), 2),
+        (17, "Sokeria", datetime('now','-40 day','localtime'), 2),
+        (91, "Bensaa", datetime('now','-40 day','localtime'), 3),
+        (4, "Bensaa venäjältä", datetime('now','-40 day','localtime'), 3),
+        (8, "Bensaa", datetime('now','-40 day','localtime'), 3),
+        (1, "Lisää bensaa", datetime('now','-40 day','localtime'), 3)
       ''');
 
     print("Added dummy data to database");

@@ -39,7 +39,7 @@ class _ContentToggleState extends State<ContentToggle> {
                 children: [
                   Observer(
                       builder: (_) => Text(
-                            getMonthName(expenseStore.month),
+                            getMonthName(expenseStore.selectedMonth),
                             textScaleFactor: 2,
                           )),
                   IconButton(
@@ -52,7 +52,7 @@ class _ContentToggleState extends State<ContentToggle> {
           Padding(
             padding: EdgeInsets.all(10),
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 400),
+              duration: const Duration(milliseconds: 0),
               child: _isListView ? widget.listWidget : widget.chartWidget,
             ),
           )

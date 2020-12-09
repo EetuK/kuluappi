@@ -9,6 +9,14 @@ part of 'expense_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ExpenseStore on _ExpenseStoreBase, Store {
+  Computed<num> _$totalExpensesComputed;
+
+  @override
+  num get totalExpenses =>
+      (_$totalExpensesComputed ??= Computed<num>(() => super.totalExpenses,
+              name: '_ExpenseStoreBase.totalExpenses'))
+          .value;
+
   final _$expenseAtom = Atom(name: '_ExpenseStoreBase.expense');
 
   @override
@@ -54,34 +62,99 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
     });
   }
 
-  final _$monthAtom = Atom(name: '_ExpenseStoreBase.month');
+  final _$selectedMonthAtom = Atom(name: '_ExpenseStoreBase.selectedMonth');
 
   @override
-  Month get month {
-    _$monthAtom.reportRead();
-    return super.month;
+  Month get selectedMonth {
+    _$selectedMonthAtom.reportRead();
+    return super.selectedMonth;
   }
 
   @override
-  set month(Month value) {
-    _$monthAtom.reportWrite(value, super.month, () {
-      super.month = value;
+  set selectedMonth(Month value) {
+    _$selectedMonthAtom.reportWrite(value, super.selectedMonth, () {
+      super.selectedMonth = value;
     });
   }
 
-  final _$yearAtom = Atom(name: '_ExpenseStoreBase.year');
+  final _$selectedYearAtom = Atom(name: '_ExpenseStoreBase.selectedYear');
 
   @override
-  int get year {
-    _$yearAtom.reportRead();
-    return super.year;
+  int get selectedYear {
+    _$selectedYearAtom.reportRead();
+    return super.selectedYear;
   }
 
   @override
-  set year(int value) {
-    _$yearAtom.reportWrite(value, super.year, () {
-      super.year = value;
+  set selectedYear(int value) {
+    _$selectedYearAtom.reportWrite(value, super.selectedYear, () {
+      super.selectedYear = value;
     });
+  }
+
+  final _$availableMonthsAtom = Atom(name: '_ExpenseStoreBase.availableMonths');
+
+  @override
+  List<Month> get availableMonths {
+    _$availableMonthsAtom.reportRead();
+    return super.availableMonths;
+  }
+
+  @override
+  set availableMonths(List<Month> value) {
+    _$availableMonthsAtom.reportWrite(value, super.availableMonths, () {
+      super.availableMonths = value;
+    });
+  }
+
+  final _$availableYearsAtom = Atom(name: '_ExpenseStoreBase.availableYears');
+
+  @override
+  List<int> get availableYears {
+    _$availableYearsAtom.reportRead();
+    return super.availableYears;
+  }
+
+  @override
+  set availableYears(List<int> value) {
+    _$availableYearsAtom.reportWrite(value, super.availableYears, () {
+      super.availableYears = value;
+    });
+  }
+
+  final _$categoryTotalExpensesAtom =
+      Atom(name: '_ExpenseStoreBase.categoryTotalExpenses');
+
+  @override
+  List<CategoryTotalExpense> get categoryTotalExpenses {
+    _$categoryTotalExpensesAtom.reportRead();
+    return super.categoryTotalExpenses;
+  }
+
+  @override
+  set categoryTotalExpenses(List<CategoryTotalExpense> value) {
+    _$categoryTotalExpensesAtom.reportWrite(value, super.categoryTotalExpenses,
+        () {
+      super.categoryTotalExpenses = value;
+    });
+  }
+
+  final _$fetchAvailableMonthsAsyncAction =
+      AsyncAction('_ExpenseStoreBase.fetchAvailableMonths');
+
+  @override
+  Future<void> fetchAvailableMonths(int year) {
+    return _$fetchAvailableMonthsAsyncAction
+        .run(() => super.fetchAvailableMonths(year));
+  }
+
+  final _$fetchAvailableYearsAsyncAction =
+      AsyncAction('_ExpenseStoreBase.fetchAvailableYears');
+
+  @override
+  Future<void> fetchAvailableYears() {
+    return _$fetchAvailableYearsAsyncAction
+        .run(() => super.fetchAvailableYears());
   }
 
   final _$fetchExpensesAsyncAction =
@@ -91,6 +164,15 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
   Future<void> fetchExpenses(Month month, int year) {
     return _$fetchExpensesAsyncAction
         .run(() => super.fetchExpenses(month, year));
+  }
+
+  final _$fetchCategoryTotalExpensesAsyncAction =
+      AsyncAction('_ExpenseStoreBase.fetchCategoryTotalExpenses');
+
+  @override
+  Future<void> fetchCategoryTotalExpenses(Month month, int year) {
+    return _$fetchCategoryTotalExpensesAsyncAction
+        .run(() => super.fetchCategoryTotalExpenses(month, year));
   }
 
   final _$_ExpenseStoreBaseActionController =
@@ -146,8 +228,12 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
 expense: ${expense},
 expenses: ${expenses},
 isLoading: ${isLoading},
-month: ${month},
-year: ${year}
+selectedMonth: ${selectedMonth},
+selectedYear: ${selectedYear},
+availableMonths: ${availableMonths},
+availableYears: ${availableYears},
+categoryTotalExpenses: ${categoryTotalExpenses},
+totalExpenses: ${totalExpenses}
     ''';
   }
 }
