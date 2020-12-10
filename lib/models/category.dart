@@ -1,3 +1,5 @@
+import 'package:kuluappi/services/database.dart';
+
 class Category {
   num id;
   String name;
@@ -10,6 +12,19 @@ class Category {
     this.createdAt = createdAt;
     this.modifiedAt = modifiedAt;
   }
+
+  Category.fromDb(Map<String, dynamic> map) {
+    id = map['id'];
+    name = map['name'];
+  }
+
 }
 
 // Look e.g. expense.dart file
+
+Future<List<Category>> getAllCategories() async {
+  var client = await ExpenseDatabase().db;
+  var response = await client.rawQuery('SELECT * FROM expenses');
+  print(response);
+  return response.map((e) => Category.fromDb(e)).toList();
+}

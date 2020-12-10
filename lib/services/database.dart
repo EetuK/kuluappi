@@ -104,6 +104,12 @@ class ExpenseDatabase {
     // Run migration according database versions
   }
 
+  /*Future<List> getAllCategories() async {
+    var client = await db;
+    final res = await client.rawQuery("SELECT * FROM categories");
+    return res;
+  }*/
+
   Future closeDb() async {
     var client = await db;
     client.close();

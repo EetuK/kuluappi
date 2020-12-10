@@ -4,10 +4,13 @@ import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/views/home/home_view.dart';
 
 class InputExpenseLayout extends StatelessWidget {
-  const InputExpenseLayout({this.category, this.expenseStore});
+  const InputExpenseLayout({@required this.category, @required this.expenseStore});
 
   final ExpenseStore expenseStore;
   final String category;
+  static TextEditingController sumController = TextEditingController();
+  static TextEditingController dateController = TextEditingController();
+  static TextEditingController descriptionController = TextEditingController();
   static const List<String> wipCategories = ["ruoka", "bensa", "laskut"];
 
   @override
@@ -43,21 +46,23 @@ class InputExpenseLayout extends StatelessWidget {
             )),
       ),
       //body: this.body,
-      body: Column(
+      body: SingleChildScrollView( child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
 
           children : [
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(0),
               child:
               Card(
                 color: Colors.white,
-                child:
+                child: Padding(padding: EdgeInsets.all(10), child:
                   Text(
                   //this.category
-                  "WIP category"
-                )
+                  //"WIP category"
+                    "Category: "+category,
+                    textScaleFactor: 1.5
+                ))
 
               ),),
             Padding(
@@ -74,6 +79,8 @@ class InputExpenseLayout extends StatelessWidget {
                     border: OutlineInputBorder(borderSide: BorderSide(),),
                     hintText: "Enter sum",
                   ),
+                  keyboardType: TextInputType.number,
+                  controller: sumController,
                 ),
                 ),
 
@@ -91,6 +98,12 @@ class InputExpenseLayout extends StatelessWidget {
                   border: OutlineInputBorder(borderSide: BorderSide(),),
                   hintText: "Enter date",
                 ),
+                readOnly: true,
+                controller: dateController,
+                onTap: () async {
+                  var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2019), lastDate: DateTime(2100));
+                  dateController.text = date.toString().substring(0,10);
+                }
               ),
             ),
 
@@ -111,6 +124,7 @@ class InputExpenseLayout extends StatelessWidget {
                   border: OutlineInputBorder(borderSide: BorderSide(),),
                   hintText: "Enter description",
                 ),
+                controller: descriptionController,
               ),
             ),
 
@@ -135,7 +149,7 @@ class InputExpenseLayout extends StatelessWidget {
 
 
           ]
-      ),
+      ),),
       backgroundColor: Colors.orange[50],
     );
   }
