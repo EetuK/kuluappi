@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/views/add_expense/widgets/InputExpenseLayout.dart';
+import 'package:kuluappi/services/database.dart';
 
 class SelectCategoryLayout extends StatelessWidget {
   const SelectCategoryLayout({this.title, this.body, this.expenseStore});
@@ -14,7 +15,7 @@ class SelectCategoryLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
-
+    var db = ExpenseDatabase();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100),

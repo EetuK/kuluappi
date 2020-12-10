@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/views/home/home_view.dart';
+import 'package:kuluappi/services/database.dart';
 
 class InputExpenseLayout extends StatelessWidget {
   const InputExpenseLayout({this.category, this.expenseStore});
@@ -13,7 +14,7 @@ class InputExpenseLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
-
+    var db = ExpenseDatabase();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100),
