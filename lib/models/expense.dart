@@ -1,5 +1,6 @@
 import 'package:kuluappi/models/month.dart';
 import 'package:kuluappi/services/database.dart';
+import 'package:kuluappi/views/home/widgets/charts/line_chart.dart';
 
 class Expense {
   num id;
@@ -63,4 +64,43 @@ Future<List<Expense>> getExpensesByYearAndMonth(Month month, int year) async {
       """, [monthNumber, year]);
 
   return response.map((e) => Expense.fromDb(e)).toList();
+}
+
+Future<List<Month>> getAvailableMonthsByYear(int year) async {
+  var client = await ExpenseDatabase().db;
+
+  print(year);
+
+  var response = await client.rawQuery("""
+        SELECT DISTINCT 
+          CAST(strftime('%m',expenses.date_created) AS interger) as month
+         FROM expenses 
+        WHERE 
+          CAST(strftime('%Y',expenses.date_created) AS integer) = ?
+        ORDER BY month
+      """, [year]);
+
+  print(response);
+
+  return response
+      .map((r) =>
+          Month.values.firstWhere((month) => month.index + 1 == r['month']))
+      .toList();
+}
+
+Future<List<int>> getAvailableYears() async {
+  var client = await ExpenseDatabase().db;
+
+  var response = await client.rawQuery("""
+        SELECT DISTINCT
+          CAST(strftime('%Y',expenses.date_created) AS interger) as year
+         FROM expenses 
+        ORDER BY year
+      """);
+
+  print(response);
+
+  return response.map<int>((r) {
+    return r['year'] as int;
+  }).toList();
 }
