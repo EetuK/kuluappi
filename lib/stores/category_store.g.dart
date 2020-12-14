@@ -77,6 +77,14 @@ mixin _$CategoryStore on _CategoryStoreBase, Store {
     return _$fetchCategoriesAsyncAction.run(() => super.fetchCategories());
   }
 
+  final _$makeNewCategoryAsyncAction =
+      AsyncAction('_CategoryStoreBase.makeNewCategory');
+
+  @override
+  Future<Category> makeNewCategory(dynamic name) {
+    return _$makeNewCategoryAsyncAction.run(() => super.makeNewCategory(name));
+  }
+
   final _$_CategoryStoreBaseActionController =
       ActionController(name: '_CategoryStoreBase');
 

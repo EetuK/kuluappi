@@ -6,7 +6,8 @@ import 'package:kuluappi/models/category.dart';
 import 'package:kuluappi/models/expense.dart';
 
 class InputExpenseLayout extends StatelessWidget {
-  const InputExpenseLayout({@required this.selectedcategory, @required this.expenseStore});
+  const InputExpenseLayout(
+      {@required this.selectedcategory, @required this.expenseStore});
 
   final ExpenseStore expenseStore;
   final Category selectedcategory;
@@ -25,135 +26,139 @@ class InputExpenseLayout extends StatelessWidget {
         preferredSize: Size.fromHeight(100),
         child: Builder(
             builder: (context) => Container(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Add expense",
-                      textScaleFactor: 1.7,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      tooltip: 'Close',
-                      onPressed: () => {
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeView()),
-                      )},
-                    ),
-                  ]),
-              margin: EdgeInsets.only(top: statusBarHeight),
-              padding: EdgeInsets.only(left: 15),
-            )),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Add expense",
+                          textScaleFactor: 1.7,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close),
+                          tooltip: 'Close',
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeView()),
+                            )
+                          },
+                        ),
+                      ]),
+                  margin: EdgeInsets.only(top: statusBarHeight),
+                  padding: EdgeInsets.only(left: 15),
+                )),
       ),
       //body: this.body,
-      body: SingleChildScrollView( child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-
-          children : [
-            Padding(
-              padding: EdgeInsets.all(0),
-              child:
-              Card(
-                color: Colors.white,
-                child: Padding(padding: EdgeInsets.all(10), child:
-                  Text(
-                  //this.category
-                  //"WIP category"
-                    "Category: "+selectedcategory.name,
-                    textScaleFactor: 1.5
-                ))
-
-              ),),
-            Padding(
-                padding: EdgeInsets.fromLTRB(20,20,20,0),
-                child: Text(
-                  "Add sum",
-                  textScaleFactor: 1.5,
-                )
-            ),
-            Padding(
+      body: SingleChildScrollView(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(0),
+                child: Card(
+                    color: Colors.white,
+                    child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                            //this.category
+                            //"WIP category"
+                            "Category: " + selectedcategory.name,
+                            textScaleFactor: 1.5))),
+              ),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Text(
+                    "Add sum",
+                    textScaleFactor: 1.5,
+                  )),
+              Padding(
                 padding: EdgeInsets.all(20),
                 child: TextField(
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide(),),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
                     hintText: "Enter sum",
                   ),
                   keyboardType: TextInputType.number,
                   controller: sumController,
                 ),
-                ),
-
-            Padding(
-                padding: EdgeInsets.fromLTRB(20,20,20,0),
-                child: Text(
-                  "Date of the expense",
-                  textScaleFactor: 1.5,
-                )
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(borderSide: BorderSide(),),
-                  hintText: "Enter date",
-                ),
-                readOnly: true,
-                controller: dateController,
-                onTap: () async {
-                  var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2019), lastDate: DateTime(2100));
-                  dateController.text = date.toString().substring(0,10);
-                }
               ),
-            ),
-
-            Padding(
-                padding: EdgeInsets.fromLTRB(20,20,20,0),
-                child: Text(
-                  "Description",
-                  textScaleFactor: 1.5,
-                )
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: TextField(
-                keyboardType: TextInputType.multiline,
-                minLines: 3,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(borderSide: BorderSide(),),
-                  hintText: "Enter description",
-                ),
-                controller: descriptionController,
+              Padding(
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Text(
+                    "Date of the expense",
+                    textScaleFactor: 1.5,
+                  )),
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                      ),
+                      hintText: "Enter date",
+                    ),
+                    readOnly: true,
+                    controller: dateController,
+                    onTap: () async {
+                      var date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2019),
+                          lastDate: DateTime(2100));
+                      dateController.text = date.toString().substring(0, 10);
+                    }),
               ),
-            ),
-
-            Padding(
+              Padding(
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Text(
+                    "Description",
+                    textScaleFactor: 1.5,
+                  )),
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  minLines: 3,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                    hintText: "Enter description",
+                  ),
+                  controller: descriptionController,
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.all(20),
                 child: RaisedButton(
-                        child: Text("SAVE"),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: BorderSide(color: Colors.red)
-                        ),
-                        color: Colors.red[400],
-                        textColor: Colors.white,
-                        onPressed: () {
-                          makeNewExpense(sumController.text, descriptionController.text, dateController.text, selectedcategory.id);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeView()),
-                          );}
-                    ),
-
-                )
-
-
-          ]
-      ),),
+                    child: Text("SAVE"),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        side: BorderSide(color: Colors.red)),
+                    color: Colors.red[400],
+                    textColor: Colors.white,
+                    onPressed: () async {
+                      await makeNewExpense(
+                          sumController.text,
+                          descriptionController.text,
+                          dateController.text,
+                          selectedcategory.id);
+                      await expenseStore.fetchAvailableYears();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeView()),
+                      );
+                    }),
+              )
+            ]),
+      ),
       backgroundColor: Colors.orange[50],
     );
   }

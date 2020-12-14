@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kuluappi/stores/category_store.dart';
 import 'package:kuluappi/views/add_expense/add_expense_view.dart';
 import 'package:kuluappi/views/settings/settings_view.dart';
+import 'package:provider/provider.dart';
 import 'TopBar.dart';
 
 class BasicLayout extends StatelessWidget {
@@ -16,6 +18,7 @@ class BasicLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
+    final categoryStore = Provider.of<CategoryStore>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -31,7 +34,8 @@ class BasicLayout extends StatelessWidget {
       body: this.body,
       backgroundColor: Colors.orange[100],
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+        onPressed: () async {
+          await categoryStore.fetchCategories();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddExpense()),
