@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:kuluappi/models/category_total_expense.dart';
 import 'package:kuluappi/models/expense.dart';
 import 'package:kuluappi/models/month.dart';
@@ -32,6 +33,47 @@ abstract class _ExpenseStoreBase with Store {
 
   @observable
   List<CategoryTotalExpense> categoryTotalExpenses = [];
+
+  List<String> getExpDescs(num index) {
+    List<String> descs = [];
+    for (var expense in expenses) {
+      if (expense.categoryId == index) {
+        descs.add(expense.description);
+      }
+    }
+    return descs;
+  }
+
+  List<num> getExpAmounts(num index) {
+    List<num> descs = [];
+    for (var expense in expenses) {
+      if (expense.categoryId == index) {
+        descs.add(expense.amount);
+      }
+    }
+    return descs;
+  }
+
+  List<num> getIds(num index) {
+    List<num> ids = [];
+    for (var expense in expenses) {
+      if (expense.categoryId == index) {
+        ids.add(expense.id);
+      }
+    }
+    return ids;
+  }
+
+  List<String> getExpDays(num index) {
+    List<String> days = [];
+    for (var expense in expenses) {
+      if (expense.categoryId == index) {
+        var date = expense.dateCreated;
+        days.add(DateFormat.d().format(date));
+      }
+    }
+    return days;
+  }
 
   @computed
   num get totalExpenses =>
@@ -106,7 +148,9 @@ abstract class _ExpenseStoreBase with Store {
   }
 
   @action
-  void setExpenseDescription() {
-    // Set this.expense.description
+  Future<void> removeExpense(num id) async {
+    await deleteExpense(id);
+    await this.fetchCategoryTotalExpenses(selectedMonth, selectedYear);
+    await this.fetchExpenses(selectedMonth, selectedYear);
   }
 }

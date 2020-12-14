@@ -18,7 +18,7 @@ class Expense {
 
   Expense.fromDb(Map<String, dynamic> map) {
     id = map['id'];
-    amount = map['amount'];
+    amount = map['sum'];
     description = map['description'];
     dateCreated = DateTime.tryParse(map['date_created']);
     categoryId = map['category_id'];
@@ -105,7 +105,19 @@ Future<List<int>> getAvailableYears() async {
   }).toList();
 }
 
+
+Future<void> deleteExpense(num id) async {
+  var client = await ExpenseDatabase().db;
+
+  await client.rawDelete("""
+        DELETE FROM expenses 
+        WHERE id = ?
+      """, [id]);
+}
+
+
 Future<void> makeNewExpense(sum, description, date, cat_id) async {
   var client = await ExpenseDatabase().db;
   await client.rawInsert('''INSERT INTO expenses (sum, description, date_created, category_id) VALUES (?,?,?,?)''', [sum, description, date, cat_id]);
 }
+
