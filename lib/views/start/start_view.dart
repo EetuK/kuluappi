@@ -14,6 +14,9 @@ class StartView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
+              padding: EdgeInsets.only(top: 20),
+            ),
+            Padding(
               child: Column(
                 children: [
                   Text(

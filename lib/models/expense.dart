@@ -18,7 +18,7 @@ class Expense {
 
   Expense.fromDb(Map<String, dynamic> map) {
     id = map['id'];
-    amount = map['amount'];
+    amount = map['sum'];
     description = map['description'];
     dateCreated = DateTime.tryParse(map['date_created']);
     categoryId = map['category_id'];
@@ -103,4 +103,13 @@ Future<List<int>> getAvailableYears() async {
   return response.map<int>((r) {
     return r['year'] as int;
   }).toList();
+}
+
+Future<void> deleteExpense(num id) async {
+  var client = await ExpenseDatabase().db;
+
+  await client.rawDelete("""
+        DELETE FROM expenses 
+        WHERE id = ?
+      """, [id]);
 }

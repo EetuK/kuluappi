@@ -1,83 +1,37 @@
-//import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:kuluappi/models/expense.dart';
-import 'package:kuluappi/models/category.dart';
 import 'package:kuluappi/stores/expense_store.dart';
-import 'package:kuluappi/stores/category_store.dart';
 import 'package:provider/provider.dart';
 import 'package:kuluappi/views/modify_expense/modify_expense_view.dart';
 
 class Lists extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final expenseStore = Provider.of<ExpenseStore>(context);
 
-final categoryStore = Provider.of<CategoryStore>(context);
-final expenseStore = Provider.of<ExpenseStore>(context);
-
-final List<String> categoryNames = [];
-final List<num> totalExpensesByCategory = [];
-
-for (var expense in expenseStore.categoryTotalExpenses) {
-  categoryNames.add(expense.categoryName);
-  totalExpensesByCategory.add(expense.totalExpenses);
-}
-
-final List<Expense> expenses = expenseStore.expenses;
-final List<Category> categories = categoryStore.categories;
-
-List<String> getExpDescs(num index) {
-  List<String> descs = [];
-  for (var expense in expenses) {
-    if (expense.categoryId == index) {
-      descs.add(expense.description);
-    }
-  }
-  return descs;
-}
-
-List<double> getExpAmounts(num index) {
-  List<double> descs = [];
-  for (var expense in expenses) {
-    if (expense.categoryId == index) {
-      descs.add(expense.amount);
-    }
-  }
-  return descs;
-}
-
-List<String> getExpDays(num index) {
-  List<String> days = [];
-  for (var expense in expenses) {
-    if (expense.categoryId == index) {
-      var date = expense.dateCreated;
-      days.add(DateFormat.d().format(date));
-    }
-  }
-  return days;
-}
-
-   return Column (
-      children: <Widget>[
-        for (var i = 0; i < categoryNames.length; i++)
-            Listview(
-            title: categoryNames[i] + " " + totalExpensesByCategory[i].toString() + "€",
-            expenses: getExpDescs(i),
-            prices: getExpAmounts(i),
-            days: getExpDays(i)
-            )
-      ]
-    );
+    return Observer(
+        builder: (_) => Column(children: <Widget>[
+              ...expenseStore.categoryTotalExpenses.map((c) {
+                return Listview(
+                    title:
+                        c.categoryName + " " + c.totalExpenses.toString() + "€",
+                    expenses: expenseStore.getExpDescs(c.categoryId),
+                    prices: expenseStore.getExpAmounts(c.categoryId),
+                    days: expenseStore.getExpDays(c.categoryId),
+                    ids: expenseStore.getIds(c.categoryId));
+              }).toList()
+            ]));
   }
 }
 
 class Listview extends StatefulWidget {
   final String title;
   final List<String> expenses;
-  final List<double> prices;
+  final List<num> prices;
   final List<String> days;
-  const Listview({Key key, this.title, this.expenses, this.prices, this.days})
+  final List<num> ids;
+  const Listview(
+      {Key key, this.title, this.expenses, this.prices, this.days, this.ids})
       : super(key: key);
 
   @override
@@ -89,47 +43,52 @@ class _ListStateview extends State<Listview> {
 
   @override
   Widget build(BuildContext context) {
+    final expenseStore = Provider.of<ExpenseStore>(context);
     return Container(
       margin: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
           Container(
-            color: Colors.grey[500],
-            padding: EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  widget.title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.white,
-                      fontSize: 20),
-                ),
-                IconButton(
-                    icon: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[500],
-                        shape: BoxShape.rectangle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          expandFlag ? Icons.expand_less : Icons.expand_more,
+              color: Colors.grey[500],
+              padding: EdgeInsets.all(5),
+              child: Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
                           color: Colors.white,
-                          size: 30.0,
-                        ),
-                      ),
+                          fontSize: 20),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        expandFlag = !expandFlag;
-                      });
-                    }),
-              ],
-            ),
-          ),
+                    IconButton(
+                        icon: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[500],
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              expandFlag
+                                  ? Icons.expand_less
+                                  : Icons.expand_more,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            expandFlag = !expandFlag;
+                          });
+                        }),
+                  ],
+                ),
+              )),
           ExpandableContainer(
             expanded: expandFlag,
             tileAmount: widget.expenses.length,
@@ -141,54 +100,52 @@ class _ListStateview extends State<Listview> {
                   num index = widget.expenses.indexOf(expense);
                   return Container(
                       decoration: BoxDecoration(color: Colors.white),
-                      child: Row(
-                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              height: 50,
-                              width: 25,
-                              child: Text(
-                                widget.days[index],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            SizedBox(width: 45),
-                            Container(
-                                height: 50,
-                                width: 60,
-                                child: Text(
-                                    widget.prices[index].toString() + '€',
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  height: 30,
+                                  width: 25,
+                                  child: Text(
+                                    widget.days[index],
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
-                                        fontSize: 16))),
-                            SizedBox(width: 35),
-                            Container(
-                                height: 50,
-                                width: 135,
-                                child: Text(
-                                  widget.expenses[index],
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16),
-                                )),
-                            PopupMenuButton(
-                                itemBuilder: (context) => [
-                                      PopupMenuItem(
-                                        value: 1,
-                                        child: Text("Muokkaa kulua"),
-                                      ),
-                                    ],
-                                initialValue: 0,
-                                onSelected: (value) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ModifyExpense()),
-                                  );
-                                })
-                          ]));
+                                        fontSize: 16),
+                                  ),
+                                ),
+                                SizedBox(width: 45),
+                                Container(
+                                    height: 30,
+                                    width: 60,
+                                    child: Text('${widget.prices[index]} €',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 16))),
+                                SizedBox(width: 35),
+                                Container(
+                                    height: 30,
+                                    width: 135,
+                                    child: Text(
+                                      widget.expenses[index],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 16),
+                                    )),
+                                PopupMenuButton(
+                                    itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            value: 1,
+                                            child: Text("Poista kulu"),
+                                          ),
+                                        ],
+                                    initialValue: 0,
+                                    onSelected: (value) async {
+                                      await expenseStore
+                                          .removeExpense(widget.ids[index]);
+                                    })
+                              ])));
                 }).toList()
               ],
             ),
@@ -226,32 +183,34 @@ class ExpandableContainer extends StatelessWidget {
         color: Colors.white,
         child: Container(
             color: Colors.white,
-            child: Row(
-                //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(
-                    "Päivä",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                        fontSize: 16,
-                        backgroundColor: Colors.white),
-                  ),
-                  SizedBox(width: 20),
-                  Text("Summa",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          fontSize: 16,
-                          backgroundColor: Colors.white)),
-                  SizedBox(width: 25),
-                  Text("Selite",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          fontSize: 16,
-                          backgroundColor: Colors.white)),
-                ])),
+            child: Padding(
+                padding: EdgeInsets.only(left: 5),
+                child: Row(
+                    //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(
+                        "Päivä",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            fontSize: 16,
+                            backgroundColor: Colors.white),
+                      ),
+                      SizedBox(width: 20),
+                      Text("Summa",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              fontSize: 16,
+                              backgroundColor: Colors.white)),
+                      SizedBox(width: 25),
+                      Text("Selite",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              fontSize: 16,
+                              backgroundColor: Colors.white)),
+                    ]))),
       ),
       AnimatedContainer(
           duration: Duration(milliseconds: 200),
