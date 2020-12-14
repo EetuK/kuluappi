@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kuluappi/models/expense.dart';
 import 'package:kuluappi/services/database.dart';
+import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/widgets/ModalLayout.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 //import 'package:kuluappi/widgets/ModalLayout.dart';
 
@@ -11,6 +13,7 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var db = ExpenseDatabase();
+    final expenseStore = Provider.of<ExpenseStore>(context);
     return ModalLayout(
         title: "Settings",
         body: Padding(
@@ -19,7 +22,10 @@ class SettingsView extends StatelessWidget {
             children: [
               RaisedButton(
                 child: Text("Delete all tables and init new"),
-                onPressed: () => {db.clearDatabaseAndInit()},
+                onPressed: () async {
+                  await db.clearDatabaseAndInit();
+                  await expenseStore.fetchAvailableYears();
+                },
               ),
               RaisedButton(
                 child: Text("Add dummy data"),
