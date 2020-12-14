@@ -1,27 +1,74 @@
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:kuluappi/models/expense.dart';
+import 'package:kuluappi/models/category.dart';
 import 'package:kuluappi/stores/expense_store.dart';
+import 'package:kuluappi/stores/category_store.dart';
 import 'package:provider/provider.dart';
 import 'package:kuluappi/views/modify_expense/modify_expense_view.dart';
 
 class Lists extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Listview(
-          title: "Beer",
-          expenses: ["Keisari Micro IPA", "Keisari APA", "Karhu 0.33L"],
-          prices: [1.63, 3.06, 1.21],
-          days: [21, 10, 3]),
-      Listview(
-          title: "Food",
-          expenses: ["Banaani 1kg", "Mikropitsa"],
-          prices: [0.99, 0.34],
-          days: [4, 31]),
-      Listview(
-          title: "Other", expenses: ["Bensaa"], prices: [50.01], days: [1]),
-    ]);
+
+final categoryStore = Provider.of<CategoryStore>(context);
+final expenseStore = Provider.of<ExpenseStore>(context);
+
+final List<String> categoryNames = [];
+final List<num> totalExpensesByCategory = [];
+
+for (var expense in expenseStore.categoryTotalExpenses) {
+  categoryNames.add(expense.categoryName);
+  totalExpensesByCategory.add(expense.totalExpenses);
+}
+
+final List<Expense> expenses = expenseStore.expenses;
+final List<Category> categories = categoryStore.categories;
+
+List<String> getExpDescs(num index) {
+  List<String> descs = [];
+  for (var expense in expenses) {
+    if (expense.categoryId == index) {
+      descs.add(expense.description);
+    }
+  }
+  return descs;
+}
+
+List<double> getExpAmounts(num index) {
+  List<double> descs = [];
+  for (var expense in expenses) {
+    if (expense.categoryId == index) {
+      descs.add(expense.amount);
+    }
+  }
+  return descs;
+}
+
+List<String> getExpDays(num index) {
+  List<String> days = [];
+  for (var expense in expenses) {
+    if (expense.categoryId == index) {
+      var date = expense.dateCreated;
+      days.add(DateFormat.d().format(date));
+    }
+  }
+  return days;
+}
+
+   return Column (
+      children: <Widget>[
+        for (var i = 0; i < categoryNames.length; i++)
+            Listview(
+            title: categoryNames[i] + " " + totalExpensesByCategory[i].toString() + "€",
+            expenses: getExpDescs(i),
+            prices: getExpAmounts(i),
+            days: getExpDays(i)
+            )
+      ]
+    );
   }
 }
 
@@ -29,7 +76,7 @@ class Listview extends StatefulWidget {
   final String title;
   final List<String> expenses;
   final List<double> prices;
-  final List<int> days;
+  final List<String> days;
   const Listview({Key key, this.title, this.expenses, this.prices, this.days})
       : super(key: key);
 
@@ -101,7 +148,7 @@ class _ListStateview extends State<Listview> {
                               height: 50,
                               width: 25,
                               child: Text(
-                                widget.days[index].toString(),
+                                widget.days[index],
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 16),
