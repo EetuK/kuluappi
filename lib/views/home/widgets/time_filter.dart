@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/models/month.dart';
 import 'package:kuluappi/stores/expense_store.dart';
+import 'package:kuluappi/stores/category_store.dart';
 import 'package:provider/provider.dart';
 
 class TimeFilter extends StatefulWidget {
@@ -16,7 +17,9 @@ class _TimeFilterState extends State<TimeFilter> {
   void didChangeDependencies() async {
     print("test _TimeFilterState");
     final expenseStore = Provider.of<ExpenseStore>(context);
+    final categoryStore = Provider.of<CategoryStore>(context);
     await expenseStore.fetchAvailableYears();
+    await categoryStore.fetchCategories();
     super.didChangeDependencies();
   }
 

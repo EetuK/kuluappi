@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/views/add_expense/widgets/InputExpenseLayout.dart';
-import 'package:kuluappi/services/database.dart';
+import 'package:kuluappi/stores/expense_store.dart';
+import 'package:kuluappi/stores/category_store.dart';
+import 'package:kuluappi/models/category.dart';
+import 'package:provider/provider.dart';
+
 
 class SelectCategoryLayout extends StatelessWidget {
-  const SelectCategoryLayout({this.title, this.body, this.expenseStore});
+  const SelectCategoryLayout({this.title, this.body, this.expenseStore, this.categoryStore});
 
   final String title;
   final Widget body;
   final ExpenseStore expenseStore;
+  final CategoryStore categoryStore;
+
   static TextEditingController categoryController = TextEditingController();
-  static const List<String> wipCategories = ["ruoka", "bensa", "laskut"];
-  //static const List<String> wipCategories = CategoryStore();
+  //static const List<String> wipCategories = ["ruoka", "bensa", "laskut"];
 
   @override
   Widget build(BuildContext context) {
+    final expenseStore = Provider.of<ExpenseStore>(context);
+    final categoryStore = Provider.of<CategoryStore>(context);
+    categoryStore.fetchCategories();
     double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -48,7 +56,7 @@ class SelectCategoryLayout extends StatelessWidget {
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children : [
 
-            Container(
+            if(categoryStore.categories.length > 0) Container(
             padding : EdgeInsets.fromLTRB(0, 30, 0, 0),
             child: Text(
               "Select category for your expense",
@@ -62,15 +70,15 @@ class SelectCategoryLayout extends StatelessWidget {
                   color: Colors.white,
                   child: ListView.builder(
                     shrinkWrap: true,
-                  itemCount: wipCategories.length,
+                  itemCount: categoryStore.categories.length,
                   itemBuilder: (BuildContext context, int index){
                     return new Container(
                       //padding: EdgeInsets.all(10),
                       child: TextButton(
-                        child: Text(wipCategories[index]), onPressed: () {
+                        child: Text(categoryStore.categories[index].name), onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => InputExpenseLayout(category: wipCategories[index], expenseStore: expenseStore, )),
+                              MaterialPageRoute(builder: (context) => InputExpenseLayout(selectedcategory: categoryStore.categories[index], expenseStore: expenseStore, )),
                             );}
 
                         ),
@@ -108,10 +116,11 @@ class SelectCategoryLayout extends StatelessWidget {
                     ),
                     color: Colors.red[400],
                     textColor: Colors.white,
-                    onPressed: () {
+                    onPressed: () async {
+                    Category newcat = await categoryStore.makeNewCategory(categoryController.text);
                     Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => InputExpenseLayout(category: categoryController.text, expenseStore: expenseStore, )),
+                    MaterialPageRoute(builder: (context) => InputExpenseLayout(selectedcategory: newcat , expenseStore: expenseStore, )),
                     );}
                   ),
               ],

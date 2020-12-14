@@ -104,3 +104,8 @@ Future<List<int>> getAvailableYears() async {
     return r['year'] as int;
   }).toList();
 }
+
+Future<void> makeNewExpense(sum, description, date, cat_id) async {
+  var client = await ExpenseDatabase().db;
+  await client.rawInsert('''INSERT INTO expenses (sum, description, date_created, category_id) VALUES (?,?,?,?)''', [sum, description, date, cat_id]);
+}

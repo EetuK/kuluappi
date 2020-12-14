@@ -31,4 +31,10 @@ abstract class _CategoryStoreBase with Store {
     this.isLoading = false;
   }
 
+  @action
+  Future<Category> makeNewCategory(name) async {
+    num newcat = await createCategory(name);
+    return new Category(newcat, name);
+  }
+
 }
