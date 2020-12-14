@@ -138,30 +138,30 @@ class InputExpenseLayout extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(20),
                 child: RaisedButton(
-                        child: Text("SAVE"),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: BorderSide(color: Colors.red)
-                        ),
-                        color: Colors.red[400],
-                        textColor: Colors.white,
-                        onPressed: () {
-                          await makeNewExpense(sumController.text, descriptionController.text, dateController.text, selectedcategory.id);
-                          sumController.clear();
-                          descriptionController.clear();
-                          dateController.clear();
-                          await expenseStore.fetchAvailableYears();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeView()),
-                          );}
-                    ),
-
-                )
-
-
-          ]
-      ),),
+                    child: Text("SAVE"),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        side: BorderSide(color: Colors.red)),
+                    color: Colors.red[400],
+                    textColor: Colors.white,
+                    onPressed: () async {
+                      await makeNewExpense(
+                          sumController.text,
+                          descriptionController.text,
+                          dateController.text,
+                          selectedcategory.id);
+                      sumController.clear();
+                      descriptionController.clear();
+                      dateController.clear();
+                      await expenseStore.fetchAvailableYears();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeView()),
+                      );
+                    }),
+              )
+            ]),
+      ),
       backgroundColor: Colors.orange[50],
     );
   }
