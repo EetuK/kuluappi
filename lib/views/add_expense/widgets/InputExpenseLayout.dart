@@ -143,6 +143,9 @@ class InputExpenseLayout extends StatelessWidget {
                         textColor: Colors.white,
                         onPressed: () {
                           makeNewExpense(sumController.text, descriptionController.text, dateController.text, selectedcategory.id);
+                          sumController.clear();
+                          descriptionController.clear();
+                          dateController.clear();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => HomeView()),
