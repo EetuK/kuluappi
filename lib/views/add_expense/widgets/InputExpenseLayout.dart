@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/views/home/home_view.dart';
+import 'package:kuluappi/models/category.dart';
+import 'package:kuluappi/models/expense.dart';
 
 class InputExpenseLayout extends StatelessWidget {
-  const InputExpenseLayout({@required this.category, @required this.expenseStore});
+  const InputExpenseLayout({@required this.selectedcategory, @required this.expenseStore});
 
   final ExpenseStore expenseStore;
-  final String category;
+  final Category selectedcategory;
   static TextEditingController sumController = TextEditingController();
   static TextEditingController dateController = TextEditingController();
   static TextEditingController descriptionController = TextEditingController();
+
   static const List<String> wipCategories = ["ruoka", "bensa", "laskut"];
 
   @override
@@ -60,7 +63,7 @@ class InputExpenseLayout extends StatelessWidget {
                   Text(
                   //this.category
                   //"WIP category"
-                    "Category: "+category,
+                    "Category: "+selectedcategory.name,
                     textScaleFactor: 1.5
                 ))
 
@@ -139,6 +142,7 @@ class InputExpenseLayout extends StatelessWidget {
                         color: Colors.red[400],
                         textColor: Colors.white,
                         onPressed: () {
+                          makeNewExpense(sumController.text, descriptionController.text, dateController.text, selectedcategory.id);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => HomeView()),

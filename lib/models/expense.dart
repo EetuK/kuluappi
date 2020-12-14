@@ -105,6 +105,7 @@ Future<List<int>> getAvailableYears() async {
   }).toList();
 }
 
+
 Future<void> deleteExpense(num id) async {
   var client = await ExpenseDatabase().db;
 
@@ -113,3 +114,10 @@ Future<void> deleteExpense(num id) async {
         WHERE id = ?
       """, [id]);
 }
+
+
+Future<void> makeNewExpense(sum, description, date, cat_id) async {
+  var client = await ExpenseDatabase().db;
+  await client.rawInsert('''INSERT INTO expenses (sum, description, date_created, category_id) VALUES (?,?,?,?)''', [sum, description, date, cat_id]);
+}
+
