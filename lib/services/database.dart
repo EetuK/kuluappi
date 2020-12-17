@@ -34,7 +34,6 @@ class ExpenseDatabase {
 
   Future<void> _onCreate(Database db, int version) async {
     await _createInitialDatabase(db);
-    return _addDummyData(db);
   }
 
   Future<void> _createInitialDatabase(Database db) async {
