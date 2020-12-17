@@ -150,8 +150,7 @@ abstract class _ExpenseStoreBase with Store {
   @action
   Future<void> removeExpense(num id) async {
     await deleteExpense(id);
-    await this.fetchCategoryTotalExpenses(selectedMonth, selectedYear);
-    await this.fetchExpenses(selectedMonth, selectedYear);
+    await this.fetchAll();
   }
 
   @action
