@@ -115,6 +115,10 @@ abstract class _ExpenseStoreBase with Store {
     this.isLoading = true;
     // Todo: Add error handling
     this.availableYears = await getAvailableYears();
+    if (this.availableYears.isEmpty) {
+      this.isLoading = false;
+      return;
+    }
     this.selectedYear = this.availableYears.first;
     await this.fetchAvailableMonths(this.selectedYear);
     print("Available Years ${this.availableYears.map((e) => e)}");
