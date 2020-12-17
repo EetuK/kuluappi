@@ -1,6 +1,5 @@
 import 'package:kuluappi/models/month.dart';
 import 'package:kuluappi/services/database.dart';
-import 'package:kuluappi/views/home/widgets/charts/line_chart.dart';
 
 class Expense {
   num id;
@@ -105,7 +104,6 @@ Future<List<int>> getAvailableYears() async {
   }).toList();
 }
 
-
 Future<void> deleteExpense(num id) async {
   var client = await ExpenseDatabase().db;
 
@@ -115,9 +113,9 @@ Future<void> deleteExpense(num id) async {
       """, [id]);
 }
 
-
-Future<void> makeNewExpense(sum, description, date, cat_id) async {
+Future<void> makeNewExpense(sum, description, date, catId) async {
   var client = await ExpenseDatabase().db;
-  await client.rawInsert('''INSERT INTO expenses (sum, description, date_created, category_id) VALUES (?,?,?,?)''', [sum, description, date, cat_id]);
+  await client.rawInsert(
+      '''INSERT INTO expenses (sum, description, date_created, category_id) VALUES (?,?,?,?)''',
+      [sum, description, date, catId]);
 }
-

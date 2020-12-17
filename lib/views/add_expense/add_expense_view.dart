@@ -10,13 +10,11 @@ class AddExpense extends StatelessWidget {
     return SelectCategoryLayout(
       title: "Add expense",
       body: Center(
-          child: Text(
-        'Add expense',
-        textScaleFactor: 1.7,
+        child: Text(
+          'Add expense',
+          textScaleFactor: 1.7,
         ),
-
       ),
     );
-
   }
 }

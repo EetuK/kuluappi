@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 import 'package:kuluappi/models/category_total_expense.dart';
 import 'package:kuluappi/models/expense.dart';
 import 'package:kuluappi/models/month.dart';
-import 'package:kuluappi/views/home/widgets/charts/line_chart.dart';
 import 'package:mobx/mobx.dart';
 part 'expense_store.g.dart';
 
@@ -102,9 +101,6 @@ abstract class _ExpenseStoreBase with Store {
   }
 
   @action
-  void addExpense() {}
-
-  @action
   Future<void> fetchAvailableMonths(int year) async {
     this.isLoading = true;
     // Todo: Add error handling
@@ -150,6 +146,14 @@ abstract class _ExpenseStoreBase with Store {
   @action
   Future<void> removeExpense(num id) async {
     await deleteExpense(id);
+    await this.fetchCategoryTotalExpenses(selectedMonth, selectedYear);
+    await this.fetchExpenses(selectedMonth, selectedYear);
+  }
+
+  @action
+  Future<void> fetchAll() async {
+    await this.fetchAvailableYears();
+    await this.fetchAvailableMonths(this.selectedYear);
     await this.fetchCategoryTotalExpenses(selectedMonth, selectedYear);
     await this.fetchExpenses(selectedMonth, selectedYear);
   }

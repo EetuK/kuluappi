@@ -26,7 +26,7 @@ class StartView extends StatelessWidget {
                   ),
                   Padding(
                     child: Text(
-                      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien.",
+                      "Start by adding new expense.",
                       textScaleFactor: 1.3,
                     ),
                     padding: EdgeInsets.only(top: 30),

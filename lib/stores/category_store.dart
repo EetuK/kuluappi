@@ -25,9 +25,8 @@ abstract class _CategoryStoreBase with Store {
     this.isLoading = true;
     // Todo: Add error handling
     this.categories = await getAllCategories();
-    print(this
-        .categories
-        .map((e) => e.name.toString() + " " + e.id.toString()));
+    print(
+        this.categories.map((e) => e.name.toString() + " " + e.id.toString()));
     this.isLoading = false;
   }
 
@@ -36,5 +35,4 @@ abstract class _CategoryStoreBase with Store {
     num newcat = await createCategory(name);
     return new Category(newcat, name);
   }
-
 }

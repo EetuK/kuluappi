@@ -4,7 +4,6 @@ class Category {
   num id;
   String name;
 
-
   Category(num id, String name) {
     this.id = id;
     this.name = name;
@@ -14,7 +13,6 @@ class Category {
     id = map['id'];
     name = map['name'];
   }
-
 }
 
 // Look e.g. expense.dart file
@@ -28,7 +26,8 @@ Future<List<Category>> getAllCategories() async {
 
 Future<num> createCategory(name) async {
   var client = await ExpenseDatabase().db;
-  var response = await client.rawInsert('INSERT INTO categories(name) VALUES(?)', [name]);
+  var response =
+      await client.rawInsert('INSERT INTO categories(name) VALUES(?)', [name]);
   print(response);
   return response;
 }

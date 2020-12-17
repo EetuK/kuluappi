@@ -183,6 +183,13 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
     return _$removeExpenseAsyncAction.run(() => super.removeExpense(id));
   }
 
+  final _$fetchAllAsyncAction = AsyncAction('_ExpenseStoreBase.fetchAll');
+
+  @override
+  Future<void> fetchAll() {
+    return _$fetchAllAsyncAction.run(() => super.fetchAll());
+  }
+
   final _$_ExpenseStoreBaseActionController =
       ActionController(name: '_ExpenseStoreBase');
 
@@ -203,17 +210,6 @@ mixin _$ExpenseStore on _ExpenseStoreBase, Store {
         name: '_ExpenseStoreBase.setYear');
     try {
       return super.setYear(year);
-    } finally {
-      _$_ExpenseStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addExpense() {
-    final _$actionInfo = _$_ExpenseStoreBaseActionController.startAction(
-        name: '_ExpenseStoreBase.addExpense');
-    try {
-      return super.addExpense();
     } finally {
       _$_ExpenseStoreBaseActionController.endAction(_$actionInfo);
     }

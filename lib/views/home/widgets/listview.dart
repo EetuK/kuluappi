@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/stores/expense_store.dart';
 import 'package:provider/provider.dart';
-import 'package:kuluappi/views/modify_expense/modify_expense_view.dart';
 
 class Lists extends StatelessWidget {
   @override

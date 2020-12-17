@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/views/home/home_view.dart';
 import 'package:kuluappi/models/category.dart';
@@ -153,7 +152,7 @@ class InputExpenseLayout extends StatelessWidget {
                       sumController.clear();
                       descriptionController.clear();
                       dateController.clear();
-                      await expenseStore.fetchAvailableYears();
+                      await expenseStore.fetchAll();
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => HomeView()),

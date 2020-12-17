@@ -5,7 +5,6 @@ import 'package:kuluappi/stores/expense_store.dart';
 import 'package:kuluappi/widgets/ModalLayout.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
-//import 'package:kuluappi/widgets/ModalLayout.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView();

@@ -10,7 +10,10 @@ class KuluAppi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [Provider<ExpenseStore>(create: (_) => ExpenseStore()), Provider<CategoryStore>(create: (_) => CategoryStore())],
+        providers: [
+          Provider<ExpenseStore>(create: (_) => ExpenseStore()),
+          Provider<CategoryStore>(create: (_) => CategoryStore())
+        ],
         child: MaterialApp(
           title: 'Mob',
           home: const HomeView(),

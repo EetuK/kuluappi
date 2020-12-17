@@ -6,13 +6,12 @@ class ModifyExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      SelectCategoryLayout(
+    return SelectCategoryLayout(
       title: "Muokkaa kulua",
       body: Center(
-          child: Text(
-        'Add expense',
-        textScaleFactor: 1.7,
+        child: Text(
+          'Add expense',
+          textScaleFactor: 1.7,
         ),
       ),
     );
